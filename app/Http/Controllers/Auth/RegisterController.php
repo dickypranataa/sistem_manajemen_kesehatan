@@ -7,12 +7,10 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     /*
-    
     |--------------------------------------------------------------------------
     | Register Controller
     |--------------------------------------------------------------------------
@@ -23,11 +21,6 @@ class RegisterController extends Controller
     |
     */
 
-    protected function redirectTo()
-    {
-        return Auth::user()->role === 'dokter' ? "/dokter" : "/home";
-    }
-    
     use RegistersUsers;
 
     /**
@@ -35,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -46,9 +39,6 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
-    //dokter
-    
 
     /**
      * Get a validator for an incoming registration request.

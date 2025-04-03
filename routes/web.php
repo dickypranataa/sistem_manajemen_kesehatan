@@ -36,3 +36,6 @@ Route::prefix('pasien')->group(function () {
     Route::resource('riwayat', RiwayatController::class);
     Route::resource('periksa', PeriksaPasienController::class);
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
