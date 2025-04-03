@@ -2,12 +2,10 @@
 
 {{-- Customize layout sections --}}
 @section('subtitle', 'Welcome')
-@section('content_header_title', 'Home')
-@section('content_header_subtitle', 'Welcome')
 
 @section('content_body')
 <div class="card">
-    <div class="card-header">Periksa</div>
+    <div class="card-header">Riwayat Periksa</div>
     <div class="card-body">
         <table class="table">
             <thead>

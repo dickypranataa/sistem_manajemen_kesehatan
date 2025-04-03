@@ -2,28 +2,23 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Model;
-
-class User extends Model
-{
-    //
-=======
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'alamat',
-        'no_hp',
-        'role',
+        'role', // Pastikan field role ada jika digunakan untuk redirect
     ];
->>>>>>> bff876c (admin LTE dashboard & dokter)
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }
