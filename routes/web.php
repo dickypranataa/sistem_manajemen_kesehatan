@@ -33,9 +33,12 @@ Route::prefix('dokter')->group(function () {
 });
 
 Route::prefix('pasien')->group(function () {
-    Route::resource('riwayat', RiwayatController::class);
-    Route::resource('periksa', PeriksaPasienController::class);
+    Route::get('/periksa', [PeriksaPasienController::class, 'index'])->name('periksa.index');
+    Route::get('/periksa/create', [PeriksaPasienController::class, 'create'])->name('periksa.create');
+    Route::post('/periksa', [PeriksaPasienController::class, 'store'])->name('periksa.store');
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 });
+
 Auth::routes();
 
 

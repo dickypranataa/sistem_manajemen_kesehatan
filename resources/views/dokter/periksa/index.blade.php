@@ -7,6 +7,7 @@
 
 @section('content_body')
 <div class="card">
+    <h3>INI HALAMAN DOKTER</h3>
     <div class="card-header">Periksa</div>
     <div class="card-body">
         <table class="table">
@@ -23,54 +24,17 @@
             </thead>
             <tbody>
                 {{-- Data yang disimulasikan (static data) --}}
+                @foreach ($periksa as $p)
                 <tr>
-                    <th scope="row">1</th>
-                    <td>101</td>
-                    <td>201</td>
-                    <td>2025-04-01</td>
-                    <td>Pengobatan umum</td>
-                    <td>200000</td>
-                    <td>
-                        <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="#" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
-                    </td>
+                    <td>{{ $p->id }}</td>
+                    <td>{{ $p->id_pasien }}</td>
+                    <td>{{ $p->id_dokter }}</td>
+                    <td>{{ $p->tgl_periksa }}</td>
+                    <td>{{ $p->catatan }}</td>
+                    <td>{{ $p->biaya_periksa }}</td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>102</td>
-                    <td>202</td>
-                    <td>2025-04-02</td>
-                    <td>Pemeriksaan darah</td>
-                    <td>150000</td>
-                    <td>
-                        <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="#" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>103</td>
-                    <td>203</td>
-                    <td>2025-04-03</td>
-                    <td>Konsultasi dokter spesialis</td>
-                    <td>500000</td>
-                    <td>
-                        <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="#" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
+                @endforeach
+
             </tbody>
         </table>
     </div>

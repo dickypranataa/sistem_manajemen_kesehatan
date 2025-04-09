@@ -302,14 +302,16 @@ return [
         // // Navbar items:
         ['header' => 'Fitur'],
         [
-            'text' => 'Periksa',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Login',
+            'url' => 'login',
+            'icon' => 'fas fa-sign-in-alt',
+            
         ],
         [
-            'text' => 'Riwayat',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Register',
+            'url' => 'register',
+            'icon' => 'fas fa-fw fa-user-plus',
+            
         ]
         // [
         //     'type' => 'navbar-search',
