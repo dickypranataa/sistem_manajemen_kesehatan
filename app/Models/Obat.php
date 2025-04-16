@@ -9,6 +9,12 @@ class Obat extends Model
 {
     //
     use HasFactory;
+
+    public function periksas()
+    {
+        return $this->belongsToMany(Periksa::class, 'detail_periksa', 'id_obat', 'id_periksa');
+    }
+
     protected $table = 'obat';
     protected $fillable = [
         'name_obat',

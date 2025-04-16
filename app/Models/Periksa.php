@@ -18,6 +18,12 @@ class Periksa extends Model
         return $this->belongsTo(User::class, 'id_pasien');
     }
 
+    public function obats()
+    {
+        return $this->belongsToMany(Obat::class, 'detail_periksa', 'id_periksa', 'id_obat');
+    }
+
+
     use HasFactory;
     protected $table = 'periksa';
     protected $fillable = [

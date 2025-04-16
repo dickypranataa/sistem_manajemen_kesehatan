@@ -25,8 +25,9 @@
                     <td>{{ $p->id }}</td>
                     <td>{{ $p->id_pasien }}</td>
                     <td>{{ $p->pasien->name ?? '-' }}</td>
-
-
+                    <td>
+                        <a href="{{ route('dokter.periksa.edit', $p->id) }}" class="btn btn-warning">Pemeriksaan</a>
+                    </td>
 
                 </tr>
                 @endforeach

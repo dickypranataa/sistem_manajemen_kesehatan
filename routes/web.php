@@ -27,7 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/dokter', [HomeController::class, 'dokter'])->name('dokter');
 
-Route::prefix('dokter')->group(function () {
+Route::prefix('dokter')->as('dokter.')->group(function () {
     Route::resource('obat', ObatController::class);
     Route::resource('periksa', PeriksaController::class);
 });

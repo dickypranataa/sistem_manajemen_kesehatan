@@ -7,7 +7,6 @@
 
 @section('content_body')
 <div class="card">
-    <h3>INI HALAMAN PASIEN</h3>
     <div class="card-header">Riwayat Pemeriksaan</div>
     <div class="card-body">
         <table class="table">
@@ -24,7 +23,7 @@
                 @foreach ($periksa as $p)
                 <tr>
                     <td>{{ $p->id }}</td>
-                    <td>{{ $p->id_dokter }}</td> {{-- Bisa diganti jadi nama dokter jika relasi sudah ada --}}
+                    <td>{{ $p->dokter->name ?? '-' }}</td>
                     <td>{{ $p->tgl_periksa }}</td>
                     <td>{{ $p->catatan }}</td>
                     <td>Rp {{ number_format($p->biaya_periksa, 0, ',', '.') }}</td>
