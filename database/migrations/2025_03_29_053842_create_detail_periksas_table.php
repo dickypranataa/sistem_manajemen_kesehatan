@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_periksas', function (Blueprint $table) {
+        Schema::create('detail_periksa', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_periksa')->constrained('periksa')->onDelete('cascade');
+            $table->foreignId('id_obat')->constrained('obat')->nullable(); // Tipe data dan nama tabel harus sesuai
             $table->timestamps();
-            $table->foreignId('id_periksa')->constrained('periksas')->onDelete('cascade');
-            $table->foreignId('id_obat')->constrained('obats')->nullable();
         });
     }
 

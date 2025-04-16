@@ -11,7 +11,7 @@ class PeriksaController extends Controller
     public function index()
     {
         //menampilkan seluruh data table periksa
-        $periksa = Periksa::all();
+        $periksa = Periksa::with('pasien')->get();
         return view('dokter/periksa.index', compact('periksa'));
     }
 

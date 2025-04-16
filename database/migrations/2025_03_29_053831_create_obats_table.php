@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('obats', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('name_obat')->max(50);
-            $table->string('kemasan')->max(50);
+        Schema::create('obat', function (Blueprint $table) {
+            $table->id(); // Tipe data ini otomatis 'unsignedBigInteger'
+            $table->string('name_obat', 50);
+            $table->string('kemasan', 50);
             $table->integer('harga')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Periksa extends Model
 {
     //
+    public function dokter()
+    {
+        return $this->belongsTo(User::class, 'id_dokter');
+    }
+
+    public function pasien()
+    {
+        return $this->belongsTo(User::class, 'id_pasien');
+    }
+
     use HasFactory;
     protected $table = 'periksa';
     protected $fillable = [
