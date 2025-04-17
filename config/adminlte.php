@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Poliklinik</b> Udinus',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -196,7 +196,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-blue elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -305,13 +305,13 @@ return [
             'text' => 'Login',
             'url' => 'login',
             'icon' => 'fas fa-sign-in-alt',
-            
+
         ],
         [
             'text' => 'Register',
             'url' => 'register',
             'icon' => 'fas fa-fw fa-user-plus',
-            
+
         ]
         // [
         //     'type' => 'navbar-search',

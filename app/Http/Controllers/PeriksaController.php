@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Periksa;
 use App\Models\Obat;
+use Illuminate\Support\Facades\Auth;
+
 
 class PeriksaController extends Controller
 {
     //
     public function index()
     {
-        //menampilkan seluruh data table periksa
-        $periksa = Periksa::with('pasien')->get();
+        $periksa = Periksa::with('pasien')->where('id_dokter', Auth::id())->get();
         return view('dokter/periksa.index', compact('periksa'));
     }
 

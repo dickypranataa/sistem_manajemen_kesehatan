@@ -8,7 +8,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{route('obat.store')}}" method="POST">
+        <form action="{{route('dokter.obat.store')}}" method="POST">
             @csrf {{-- harus ada di form untuk proteksi, biar gaada anomali--}}
             <div class="form-group">
                 <label for="nama">Nama obat</label>
@@ -28,7 +28,7 @@
             </div>
             <div class="wrappper d-flex justify-content-end" style="gap:10px;">
                 <button type="submit" class="btn btn-success">Tambah</button>
-                <a href="{{route('obat.index')}}" class="btn btn-secondary">Kembali</a>
+                <a href="{{route('dokter.obat.index')}}" class="btn btn-secondary">Kembali</a>
             </div>
         </form>
     </div>

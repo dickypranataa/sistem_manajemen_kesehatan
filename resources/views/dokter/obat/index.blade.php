@@ -7,12 +7,15 @@
 
 @section('content_body')
 <div class="card">
+    {{-- Tombol untuk menambah obat --}}
+    <div class="card-header">
+        <a href="{{ route('dokter.obat.create') }}" class="btn btn-primary float-right">
+            <i class="fas fa-plus"></i> Tambah Obat
+        </a>
+    </div>
 
     {{-- Tabel Daftar Obat --}}
     <table class="table mt-4">
-        <button>
-            <a href="{{ route('obat.create') }}" class="btn btn-primary">Tambah Obat</a>
-        </button>
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -35,10 +38,8 @@
                 <td>{{ $o->created_at }}</td>
                 <td>{{ $o->updated_at }}</td>
                 <td>
-
-
-                    <a href="{{ route('obat.edit', $o->id) }}" class="btn btn-warning">Edit</a>
-                    <form action={{ route('obat.destroy', $o->id) }} method="POST" style="display:inline;">
+                    <a href="{{ route('dokter.obat.edit', $o->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action={{ route('dokter.obat.destroy', $o->id) }} method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
@@ -46,9 +47,7 @@
                 </td>
             </tr>
             @endforeach
-
         </tbody>
     </table>
-</div>
 </div>
 @endsection

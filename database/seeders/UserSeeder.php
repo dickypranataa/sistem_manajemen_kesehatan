@@ -29,6 +29,14 @@ class UserSeeder extends Seeder
                 'email' => 'isul@gmail.com',
                 'password' => bcrypt('password') // Enkripsi password
             ],
+            [
+                'name' => 'Pranata',
+                'alamat' => 'Jalan',
+                'no_hp' => '0812341123',
+                'role' => 'dokter',
+                'email' => 'pranata@gmail.com',
+                'password' => bcrypt('password') // Enkripsi password
+            ],
         ];
 
         foreach ($data as $d) {
