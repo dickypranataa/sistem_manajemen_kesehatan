@@ -27,12 +27,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/dokter', [HomeController::class, 'dokter'])->name('dokter');
 
-Route::prefix('dokter')->as('dokter.')->group(function () {
+Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->as('dokter.')->group(function () {
     Route::resource('obat', ObatController::class);
     Route::resource('periksa', PeriksaController::class);
 });
 
-Route::prefix('pasien')->group(function () {
+Route::middleware(['auth', 'role:pasien'])->prefix('pasien')->group(function () {
     Route::get('/periksa', [PeriksaPasienController::class, 'index'])->name('periksa.index');
     Route::get('/periksa/create', [PeriksaPasienController::class, 'create'])->name('periksa.create');
     Route::post('/periksa', [PeriksaPasienController::class, 'store'])->name('periksa.store');
