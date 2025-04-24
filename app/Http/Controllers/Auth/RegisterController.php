@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'string', 'in:dokter,pasien'],
         ]);
     }
 
@@ -67,6 +68,20 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'],
         ]);
+    }
+
+    protected function redirectTo()
+    {
+        $role = auth()->user()->role;
+
+        if ($role === 'dokter') {
+            return '/dokter/dashboard';
+        } elseif ($role === 'pasien') {
+            return 'pasien.dashboard';
+        }
+
+        return '/home'; // fallback jika role tidak dikenali
     }
 }
