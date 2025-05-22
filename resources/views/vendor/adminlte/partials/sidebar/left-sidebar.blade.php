@@ -21,6 +21,7 @@
 
                 {{-- Hak Akses berdasarkan Role --}}
                 @if(Auth::check() && Auth::user()->role === 'dokter')
+                {{-- Menu dokter --}}
                 <li class="nav-item">
                     <a href="{{ url('/dokter/periksa') }}" class="nav-link">
                         <i class="fas fa-stethoscope nav-icon"></i>
@@ -33,7 +34,9 @@
                         <p>Obat</p>
                     </a>
                 </li>
+
                 @elseif(Auth::check() && Auth::user()->role === 'pasien')
+                {{-- Menu pasien --}}
                 <li class="nav-item">
                     <a href="{{ url('/pasien/periksa') }}" class="nav-link">
                         <i class="fas fa-notes-medical nav-icon"></i>
@@ -46,7 +49,23 @@
                         <p>Riwayat Periksa</p>
                     </a>
                 </li>
+
+                @elseif(Auth::check() && Auth::user()->role === 'admin')
+                {{-- Menu admin --}}
+                <li class="nav-item">
+                    <a href="{{ url('/admin/dokter') }}" class="nav-link">
+                        <i class="fas fa-user-md nav-icon"></i>
+                        <p>Kelola Dokter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.poli.index') }}" class="nav-link">
+                        <i class="fas fa-clinic-medical nav-icon"></i>
+                        <p>Kelola Poli</p>
+                    </a>
+                </li>
                 @endif
+
 
                 {{-- Menu dari konfigurasi AdminLTE --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')

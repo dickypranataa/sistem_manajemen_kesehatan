@@ -7,6 +7,8 @@ use App\Http\Controllers\PeriksaController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\PeriksaPasienController;
+use App\Http\Controllers\Admin\DokterController;
+use App\Http\Controllers\Admin\PoliController;
 
 
 
@@ -38,6 +40,14 @@ Route::middleware(['auth', 'role:pasien'])->prefix('pasien')->group(function () 
     Route::post('/periksa', [PeriksaPasienController::class, 'store'])->name('periksa.store');
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 });
+
+
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(function () {
+    Route::resource('dokter', DokterController::class);
+    Route::resource('poli', PoliController::class);
+});
+
 
 Auth::routes();
 

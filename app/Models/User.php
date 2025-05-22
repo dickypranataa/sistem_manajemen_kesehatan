@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    
+
     protected $fillable = [
         'name',
         'email',
@@ -19,8 +21,14 @@ class User extends Authenticatable
         'no_ktp',
         'no_hp',
         'no_rm',
-        // Jika ada field lain yang mau diisi mass assignment, tambahkan juga di sini
+        'id_poli',
     ];
+
+
+    public function poli()
+    {
+        return $this->belongsTo(DaftarPoli::class, 'id_poli');
+    }
 
     protected $hidden = [
         'password',
