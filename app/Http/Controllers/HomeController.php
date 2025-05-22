@@ -17,7 +17,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $user = auth()->user(); // Gunakan auth() untuk mendapatkan user yang sedang login
+        $user = auth()->user(); 
 
         if (!$user) {
             return redirect()->route('login'); // Jika user tidak ditemukan, arahkan ke halaman login

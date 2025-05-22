@@ -10,78 +10,51 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    //protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'in:dokter,pasien'],
+            'alamat' => ['required', 'string', 'max:255'],
+            'no_ktp' => ['required', 'string', 'max:20'],
+            'no_hp' => ['required', 'string', 'max:255'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
+        // Generate nomor RM terakhir
+        $lastUser = User::where('role', 'pasien')
+            ->orderBy('no_rm', 'desc')
+            ->first();
+
+        if ($lastUser && preg_match('/RM(\d+)/', $lastUser->no_rm, $matches)) {
+            $number = intval($matches[1]) + 1;
+        } else {
+            $number = 1;
+        }
+
+        // Format RM jadi RM + 5 digit angka 00001 dst
+        $no_rm = 'RM' . str_pad($number, 5, '0', STR_PAD_LEFT);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => $data['role'],
+            'role' => 'pasien',  // set otomatis
+            'alamat' => $data['alamat'] ?? null,
+            'no_ktp' => $data['no_ktp'] ?? null,
+            'no_hp' => $data['no_hp'] ?? null,
+            'no_rm' => $no_rm,
         ]);
     }
 
-    protected function redirectTo()
+
+    public function __construct()
     {
-        $role = auth()->user()->role;
-
-        if ($role === 'dokter') {
-            return '/dokter/dashboard';
-        } elseif ($role === 'pasien') {
-            return 'pasien.dashboard';
-        }
-
-        return '/home'; // fallback jika role tidak dikenali
+        $this->middleware('guest');
     }
 }

@@ -14,7 +14,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Pastikan field role ada jika digunakan untuk redirect
+        'role',
+        'alamat',
+        'no_ktp',
+        'no_hp',
+        'no_rm',
+        // Jika ada field lain yang mau diisi mass assignment, tambahkan juga di sini
     ];
 
     protected $hidden = [
