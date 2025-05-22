@@ -46,6 +46,11 @@
         <input type="password" name="password" class="form-control" required>
     </div>
 
+    <div class="form-group">
+        <label>Konfirmasi Password</label>
+        <input type="password" name="password_confirmation" class="form-control" required>
+    </div>
+
     <button type="submit" class="btn btn-success">Simpan</button>
     <a href="{{ route('admin.dokter.index') }}" class="btn btn-secondary">Batal</a>
 </form>

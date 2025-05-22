@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\DaftarPoli;
+use App\Models\Poli;
 use Illuminate\Support\Facades\Hash;
 
 class DokterController extends Controller
@@ -24,7 +25,7 @@ class DokterController extends Controller
      */
     public function create()
     {
-        $polis = DaftarPoli::all();
+        $polis = Poli::all(); // ganti ke model yang sesuai dengan tabel `poli`
         return view('admin.dokter.create', compact('polis'));
     }
 
@@ -61,7 +62,7 @@ class DokterController extends Controller
     public function edit($id)
     {
         $dokter = User::findOrFail($id);
-        $polis = DaftarPoli::all();
+        $polis = Poli::all();
         return view('admin.dokter.edit', compact('dokter', 'polis'));
     }
 

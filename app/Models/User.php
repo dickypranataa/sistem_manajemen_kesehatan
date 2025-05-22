@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Poli;
 
 class User extends Authenticatable
 {
@@ -27,8 +28,10 @@ class User extends Authenticatable
 
     public function poli()
     {
-        return $this->belongsTo(DaftarPoli::class, 'id_poli');
+        return $this->belongsTo(Poli::class, 'id_poli');
     }
+
+
 
     protected $hidden = [
         'password',
