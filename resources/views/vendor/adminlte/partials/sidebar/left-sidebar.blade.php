@@ -64,6 +64,18 @@
                         <p>Kelola Poli</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('/admin/pasien') }}" class="nav-link">
+                        <i class="fas fa-user-injured nav-icon"></i>
+                        <p>Kelola Pasien</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/admin/obat') }}" class="nav-link">
+                        <i class="fas fa-prescription-bottle-alt nav-icon"></i>
+                        <p>Kelola Obat</p>
+                    </a>
+                </li>
                 @endif
 
 
