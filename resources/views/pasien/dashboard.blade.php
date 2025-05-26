@@ -32,7 +32,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Riwayat Periksa</h5>
                                     <p class="card-text">Lihat riwayat pemeriksaan Anda dan hasilnya.</p>
-                                    <a href="{{ route('riwayat.index') }}" class="btn btn-light btn-sm">
+                                    <a href="{{ route('pasien.riwayat.index') }}" class="btn btn-light btn-sm">
                                         Lihat Riwayat
                                     </a>
                                 </div>

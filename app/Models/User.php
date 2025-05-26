@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Poli;
+use App\Models\PeriksaPasien;
 
 class User extends Authenticatable
 {
@@ -31,6 +32,17 @@ class User extends Authenticatable
         return $this->belongsTo(Poli::class, 'id_poli');
     }
 
+
+
+    public function daftarPoliSebagaiPasien()
+    {
+        return $this->hasMany(DaftarPoli::class, 'user_id');
+    }
+
+    public function daftarPoliSebagaiDokter()
+    {
+        return $this->hasMany(DaftarPoli::class, 'dokter_id');
+    }
 
 
     protected $hidden = [

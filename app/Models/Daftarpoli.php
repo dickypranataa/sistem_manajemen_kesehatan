@@ -2,27 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DaftarPoli extends Model
 {
-    use HasFactory;
+    protected $table = 'daftar_poli';
 
-    // Nama table jika tidak mengikuti konvensi Laravel
-    protected $table = 'poli';
-
-    // Kolom yang bisa diisi secara massal
     protected $fillable = [
-        'nama_poli',
-        'keterangan',
+        'user_id',
+        'dokter_id',
+        'poli_id',
+        'hari',
+        'tanggal',
+        'jam_mulai',
+        'jam_selesai',
+        'status',
+        'no_antrian',
     ];
-
-    /**
-     * Relasi ke User (dokter) yang terhubung ke poli ini.
-     */
-    public function users()
-    {
-        return $this->hasMany(User::class, 'id_poli');
-    }
 }

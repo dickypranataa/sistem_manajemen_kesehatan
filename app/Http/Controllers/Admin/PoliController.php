@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\DaftarPoli;
+use App\Models\Poli;
 
 class PoliController extends Controller
 {
     public function index()
     {
-        $polis = DaftarPoli::all();
+        $polis = Poli::all();
         return view('admin.poli.index', compact('polis'));
     }
 
@@ -26,14 +26,14 @@ class PoliController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        DaftarPoli::create($request->only('nama_poli', 'keterangan'));
+        Poli::create($request->only('nama_poli', 'keterangan'));
 
         return redirect()->route('admin.poli.index')->with('success', 'Poli berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
-        $poli = DaftarPoli::findOrFail($id);
+        $poli = Poli::findOrFail($id);
         return view('admin.poli.edit', compact('poli'));
     }
 
@@ -44,7 +44,7 @@ class PoliController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        $poli = DaftarPoli::findOrFail($id);
+        $poli = Poli::findOrFail($id);
         $poli->update($request->only('nama_poli', 'keterangan'));
 
         return redirect()->route('admin.poli.index')->with('success', 'Poli berhasil diupdate.');
@@ -52,7 +52,7 @@ class PoliController extends Controller
 
     public function destroy($id)
     {
-        $poli = DaftarPoli::findOrFail($id);
+        $poli = Poli::findOrFail($id);
         $poli->delete();
 
         return redirect()->route('admin.poli.index')->with('success', 'Poli berhasil dihapus.');

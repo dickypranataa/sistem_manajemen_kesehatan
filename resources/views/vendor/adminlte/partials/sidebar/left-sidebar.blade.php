@@ -29,6 +29,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('dokter.jadwal.index') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt nav-icon"></i>
+                        <p>Jadwal</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('/dokter/obat') }}" class="nav-link">
                         <i class="fas fa-pills nav-icon"></i>
                         <p>Obat</p>

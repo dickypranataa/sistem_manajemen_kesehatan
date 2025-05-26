@@ -1,37 +1,41 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
-@section('subtitle', 'Periksa')
-@section('content_header_title', 'Form Pemeriksaan')
-@section('content_header_subtitle', 'Input Nama Pasien dan Pilih Dokter')
+@section('title', 'Daftar Periksa Pasien')
 
-@section('content_body')
-{{-- Form Pemeriksaan --}}
-<div class="card mb-4">
-    <div class="card-header">Form Pemeriksaan</div>
-    <div class="card-body">
-        <form method="POST" action="{{ route('periksa.store') }}">
-            @csrf
+@section('content_header')
+<h1>Daftar Periksa</h1>
+@stop
 
-            {{-- Nama Pasien (otomatis dari Auth) --}}
-            <div class="mb-3">
-                <label for="nama_pasien" class="form-label">Nama Pasien</label>
-                <input type="text" class="form-control" value="{{ Auth::user()->name }}" disabled>
-            </div>
-
-            {{-- Pilih Dokter --}}
-            <div class="mb-3">
-                <label for="dokter_id" class="form-label">Pilih Dokter</label>
-                <select name="dokter_id" id="dokter_id" class="form-select" required>
-                    <option value="">-- Pilih Dokter --</option>
-                    @foreach($dokter as $d)
-                    <option value="{{ $d->id }}">{{ $d->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Simpan Pemeriksaan</button>
-        </form>
-    </div>
+@section('content')
+<div class="mb-3">
+    <a href="{{ route('pasien.periksa.create') }}" class="btn btn-primary">+ Tambah Periksa</a>
 </div>
-
-@endsection
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Poli</th>
+            <th>Dokter</th>
+            <th>Hari</th>
+            <th>Mulai</th>
+            <th>Selesai</th>
+            <th>Antrian</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($periksas as $index => $periksa)
+        <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ $periksa->daftarPoli->poli->nama_poli ?? '-' }}</td>
+            <td>{{ $periksa->daftarPoli->dokter_id }}</td>
+            <td>{{ $periksa->daftarPoli->hari }}</td>
+            <td>{{ $periksa->daftarPoli->jam_mulai }}</td>
+            <td>{{ $periksa->daftarPoli->jam_selesai }}</td>
+            <td>{{ $periksa->daftarPoli->no_antrian }}</td>
+            <td>{{ $periksa->status }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+@stop
