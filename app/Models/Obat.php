@@ -15,6 +15,13 @@ class Obat extends Model
         return $this->belongsToMany(Periksa::class, 'detail_periksa', 'id_obat', 'id_periksa');
     }
 
+    public function periksaPasien()
+    {
+        return $this->belongsToMany(PeriksaPasien::class, 'periksa_obat', 'obat_id', 'periksa_pasien_id')
+            ->withPivot('jumlah', 'harga');
+    }
+
+
     protected $table = 'obat';
     protected $fillable = [
         'name_obat',

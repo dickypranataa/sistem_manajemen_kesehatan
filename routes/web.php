@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\PasienController;
 use App\Http\Controllers\Admin\ObatController;
 use App\Http\Controllers\Dokter\JadwalPeriksaController;
 use App\Http\Controllers\Dokter\DokterPeriksaController;
+use App\Http\Controllers\Dokter\RiwayatPasienController;
+
 
 
 
@@ -43,6 +45,10 @@ Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->as('dokter.')->gro
     Route::post('/jadwal', [JadwalPeriksaController::class, 'store'])->name('jadwal.store');
     Route::get('/jadwal/{id}/edit', [JadwalPeriksaController::class, 'edit'])->name('jadwal.edit');
     Route::put('/jadwal/{id}', [JadwalPeriksaController::class, 'update'])->name('jadwal.update');
+
+    // Riwayat pasien
+    Route::get('/riwayat', [RiwayatPasienController::class, 'index'])->name('riwayat.index');
+    Route::get('/riwayat/{id}', [RiwayatPasienController::class, 'show'])->name('riwayat.show');
 });
 
 Route::middleware(['auth', 'role:pasien'])->prefix('pasien')->name('pasien.')->group(function () {

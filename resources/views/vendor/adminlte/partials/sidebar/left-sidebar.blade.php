@@ -40,6 +40,12 @@
                         <p>Obat</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('/dokter/riwayat') }}" class="nav-link">
+                        <i class="fas fa-history nav-icon"></i>
+                        <p>Riwayat Periksa</p>
+                    </a>
+                </li>
 
                 @elseif(Auth::check() && Auth::user()->role === 'pasien')
                 {{-- Menu pasien --}}

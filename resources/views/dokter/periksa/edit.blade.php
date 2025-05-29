@@ -24,14 +24,24 @@
 
         <div class="mb-3">
             <label>Obat</label>
-            <select name="obat_id[]" id="obat-select" class="form-control" multiple>
+            <div>
                 @foreach($obatList as $obat)
-                <option value="{{ $obat->id }}" data-harga="{{ $obat->harga }}">
-                    {{ $obat->name_obat }} - Rp {{ number_format($obat->harga, 0, ',', '.') }}
-                </option>
+                <div class="form-check">
+                    <input
+                        class="form-check-input obat-checkbox"
+                        type="checkbox"
+                        name="obat_id[]"
+                        value="{{ $obat->id }}"
+                        data-harga="{{ $obat->harga }}"
+                        id="obat-{{ $obat->id }}">
+                    <label class="form-check-label" for="obat-{{ $obat->id }}">
+                        {{ $obat->name_obat }} - Rp {{ number_format($obat->harga, 0, ',', '.') }}
+                    </label>
+                </div>
                 @endforeach
-            </select>
+            </div>
         </div>
+
 
         <div class="mb-3">
             <label>Harga Periksa</label>
@@ -45,7 +55,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const obatSelect = document.getElementById('obat-select');
+        const checkboxes = document.querySelectorAll('.obat-checkbox');
         const hargaPeriksaInput = document.getElementById('harga-periksa');
         const totalHargaHidden = document.getElementById('total_harga');
 
@@ -58,13 +68,14 @@
         function updateHarga() {
             let totalObat = 0;
 
-            // Loop pilihan obat yang dipilih
-            for (let option of obatSelect.selectedOptions) {
-                const hargaObat = parseInt(option.dataset.harga);
-                if (!isNaN(hargaObat)) {
-                    totalObat += hargaObat;
+            checkboxes.forEach(chk => {
+                if (chk.checked) {
+                    const hargaObat = parseInt(chk.dataset.harga);
+                    if (!isNaN(hargaObat)) {
+                        totalObat += hargaObat;
+                    }
                 }
-            }
+            });
 
             const total = hargaDasar + totalObat;
 
@@ -72,11 +83,12 @@
             totalHargaHidden.value = total; // untuk submit ke backend
         }
 
-        // Event listener ketika pilihan obat berubah
-        obatSelect.addEventListener('change', updateHarga);
+        checkboxes.forEach(chk => {
+            chk.addEventListener('change', updateHarga);
+        });
 
-        // Init harga saat halaman load (jika ada obat yang sudah dipilih)
         updateHarga();
     });
 </script>
+
 @endsection

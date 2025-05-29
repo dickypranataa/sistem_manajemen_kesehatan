@@ -7,8 +7,9 @@
         <thead>
             <tr>
                 <th>Nama Pasien</th>
-                <th>Keluhan</th>
                 <th>Tanggal Daftar</th>
+                <th>Keluhan</th>
+                <th>Catatan</th>
                 <th>Total Harga</th>
                 <th>Status</th>
                 <th>Aksi</th>
@@ -18,8 +19,9 @@
             @foreach($periksaList as $periksa)
             <tr>
                 <td>{{ $periksa->pasien->name }}</td>
-                <td>{{ $periksa->keluhan }}</td>
                 <td>{{ $periksa->created_at->format('d-m-Y') }}</td>
+                <td>{{ $periksa->keluhan }}</td>
+                <td>{{ $periksa->catatan }}</td>
                 <td>{{ $periksa->total_harga }}</td>
                 <td>{{ $periksa->status }}</td>
                 <td>

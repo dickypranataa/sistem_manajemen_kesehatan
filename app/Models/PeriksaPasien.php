@@ -11,6 +11,7 @@ class PeriksaPasien extends Model
         'pasien_id',
         'daftar_poli_id',
         'keluhan',
+        'catatan',
         'tanggal_periksa',
         'total_harga',
         'status',

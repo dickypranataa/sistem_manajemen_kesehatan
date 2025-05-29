@@ -1,24 +1,39 @@
 <?php
 
+namespace App\Http\Controllers\Dokter;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\PeriksaPasien;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+
+
 
 class RiwayatPasienController extends Controller
 {
-    // Menampilkan riwayat pasien yang telah diperiksa oleh dokter ini
     public function index()
     {
-        //menampilkan data pasien dari tabel user
-        $riwayatPasien = User::where('role', 'pasien')
-            ->with(['periksaPasien' => function ($query) {
-                $query->where('status', 'Selesai')
-                    ->orderBy('created_at', 'desc');
-            }])
+        // Hanya pasien, bukan dokter
+        $pasienList = User::where('role', 'pasien')->get();
+
+        return view('dokter.riwayat.index', compact('pasienList'));
+    }
+
+    public function show($id)
+    {
+        $pasien = User::findOrFail($id);
+
+        // Hanya ambil data untuk dokter yang login
+        $dokterId = auth()->user()->id;
+
+        $riwayatList = PeriksaPasien::where('pasien_id', $id)
+            ->whereHas('daftarPoli', function ($query) use ($dokterId) {
+                $query->where('dokter_id', $dokterId);
+            })
+            ->with(['daftarPoli.poli', 'pasien', 'daftarPoli.dokter', 'obat'])
             ->get();
-        return view('dokter.riwayat.index', compact('riwayatPasien'));
+
+        return view('dokter.riwayat.show', compact('pasien', 'riwayatList'));
     }
 }

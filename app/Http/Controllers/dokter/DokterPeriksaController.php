@@ -63,7 +63,7 @@ class DokterPeriksaController extends Controller
         // Update data periksa_pasien
         $periksa->update([
             'tanggal_periksa' => $request->tanggal_periksa,
-            'keluhan' => $request->catatan,
+            'catatan' => $request->catatan,
             'status' => 'Selesai',
             'total_harga' => $totalBayar,
         ]);
