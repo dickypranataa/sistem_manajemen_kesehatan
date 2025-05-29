@@ -50,11 +50,20 @@ class DokterPeriksaController extends Controller
         $biayaPeriksa = 150000;
         $totalObat = 0;
 
+        // Hapus data obat lama jika sebelumnya sudah pernah simpan
+        $periksa->obat()->detach();
+
         if ($request->filled('obat_id')) {
             $obats = Obat::whereIn('id', $request->obat_id)->get();
 
             foreach ($obats as $obat) {
                 $totalObat += $obat->harga;
+
+                // Simpan data ke tabel periksa_obat
+                $periksa->obat()->attach($obat->id, [
+                    'jumlah' => 1, // default 1
+                    'harga' => $obat->harga,
+                ]);
             }
         }
 

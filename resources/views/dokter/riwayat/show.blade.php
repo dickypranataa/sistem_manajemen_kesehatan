@@ -35,7 +35,10 @@
                     @if($riwayat->obat->count())
                     <ul>
                         @foreach($riwayat->obat as $obat)
-                        <li>{{ $obat->name_obat }} (Rp {{ number_format($obat->harga, 0, ',', '.') }})</li>
+                        <li>
+                            {{ $obat->name_obat }}
+                            (Rp {{ number_format($obat->pivot->harga, 0, ',', '.') }})
+                        </li>
                         @endforeach
                     </ul>
                     @else
