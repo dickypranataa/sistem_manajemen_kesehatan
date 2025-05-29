@@ -28,7 +28,7 @@
         <tr>
             <td>{{ $index + 1 }}</td>
             <td>{{ $periksa->daftarPoli->poli->nama_poli ?? '-' }}</td>
-            <td>{{ $periksa->daftarPoli->dokter_id }}</td>
+            <td>{{ $periksa->daftarPoli->dokter->name ?? '-' }}</td>
             <td>{{ $periksa->daftarPoli->hari }}</td>
             <td>{{ $periksa->daftarPoli->jam_mulai }}</td>
             <td>{{ $periksa->daftarPoli->jam_selesai }}</td>

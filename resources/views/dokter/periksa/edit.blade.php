@@ -1,57 +1,82 @@
 @extends('layouts.app')
 
-@section('subtitle', 'Edit Pemeriksaan')
-@section('content_header_title', 'Edit Pemeriksaan')
-@section('content_header_subtitle', 'Isi data hasil pemeriksaan')
+@section('content')
+<div class="container">
+    <h3>Periksa Pasien: {{ $periksa->pasien->name }}</h3>
+    <form method="POST" action="{{ route('dokter.periksa.update', $periksa->id) }}">
+        @csrf
+        @method('PUT')
 
-@section('content_body')
-<div class="card">
-    <div class="card-header">Form Edit Pemeriksaan</div>
-    <div class="card-body">
-        <form action="{{ route('dokter.periksa.update', $periksa->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+        <div class="mb-3">
+            <label>Nama Pasien</label>
+            <input type="text" class="form-control" value="{{ $periksa->pasien->name }}" disabled>
+        </div>
 
-            {{-- Tanggal Periksa --}}
-            <div class="mb-3">
-                <label for="tgl_periksa" class="form-label">Tanggal Periksa</label>
-                <input type="datetime-local" name="tgl_periksa" id="tgl_periksa" class="form-control"
-                    value="{{ old('tgl_periksa', $periksa->tgl_periksa ? date('Y-m-d\TH:i', strtotime($periksa->tgl_periksa)) : '') }}" required>
-            </div>
+        <div class="mb-3">
+            <label>Tanggal Periksa</label>
+            <input type="date" name="tanggal_periksa" class="form-control" required>
+        </div>
 
-            {{-- Catatan --}}
-            <div class="mb-3">
-                <label for="catatan" class="form-label">Catatan</label>
-                <textarea name="catatan" id="catatan" class="form-control" rows="3" required>{{ old('catatan', $periksa->catatan) }}</textarea>
-            </div>
+        <div class="mb-3">
+            <label>Catatan / Keluhan</label>
+            <textarea name="catatan" class="form-control"></textarea>
+        </div>
 
-            <div class="mb-3">
-                <label for="obat_id" class="form-label">Obat yang Diberikan</label>
-                <div class="form-control p-3" style="height:auto">
-                    @foreach($obat as $o)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="obat_id[]" value="{{ $o->id }}"
-                            id="obat_{{ $o->id }}"
-                            {{ in_array($o->id, $selectedObats) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="obat_{{ $o->id }}">
-                            {{ $o->name_obat }} - Rp {{ number_format($o->harga, 0, ',', '.') }}
-                        </label>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
+        <div class="mb-3">
+            <label>Obat</label>
+            <select name="obat_id[]" id="obat-select" class="form-control" multiple>
+                @foreach($obatList as $obat)
+                <option value="{{ $obat->id }}" data-harga="{{ $obat->harga }}">
+                    {{ $obat->name_obat }} - Rp {{ number_format($obat->harga, 0, ',', '.') }}
+                </option>
+                @endforeach
+            </select>
+        </div>
 
+        <div class="mb-3">
+            <label>Harga Periksa</label>
+            <input type="text" id="harga-periksa" class="form-control" value="Rp 150.000" disabled>
+            <input type="hidden" name="total_harga" id="total_harga" value="150000">
+        </div>
 
-            {{-- Biaya Periksa --}}
-            <div class="mb-3">
-                <label for="biaya_periksa" class="form-label">Biaya Periksa (Rp)</label>
-                <input type="number" name="biaya_periksa" id="biaya_periksa" class="form-control"
-                    value="{{ old('biaya_periksa', $periksa->biaya_periksa) }}" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-            <a href="{{ route('dokter.periksa.index') }}" class="btn btn-secondary">Kembali</a>
-        </form>
-    </div>
+        <button type="submit" class="btn btn-success">Simpan Pemeriksaan</button>
+    </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const obatSelect = document.getElementById('obat-select');
+        const hargaPeriksaInput = document.getElementById('harga-periksa');
+        const totalHargaHidden = document.getElementById('total_harga');
+
+        const hargaDasar = 150000;
+
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function updateHarga() {
+            let totalObat = 0;
+
+            // Loop pilihan obat yang dipilih
+            for (let option of obatSelect.selectedOptions) {
+                const hargaObat = parseInt(option.dataset.harga);
+                if (!isNaN(hargaObat)) {
+                    totalObat += hargaObat;
+                }
+            }
+
+            const total = hargaDasar + totalObat;
+
+            hargaPeriksaInput.value = formatRupiah(total);
+            totalHargaHidden.value = total; // untuk submit ke backend
+        }
+
+        // Event listener ketika pilihan obat berubah
+        obatSelect.addEventListener('change', updateHarga);
+
+        // Init harga saat halaman load (jika ada obat yang sudah dipilih)
+        updateHarga();
+    });
+</script>
 @endsection

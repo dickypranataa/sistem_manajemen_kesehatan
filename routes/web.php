@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\PoliController;
 use App\Http\Controllers\Admin\PasienController;
 use App\Http\Controllers\Admin\ObatController;
 use App\Http\Controllers\Dokter\JadwalPeriksaController;
-use App\Http\Controllers\Dokter\PeriksaController as DokterPeriksaController;
+use App\Http\Controllers\Dokter\DokterPeriksaController;
+
 
 
 Route::get('/', function () {
@@ -31,7 +32,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/dokter', [HomeController::class, 'dokter'])->name('dokter');
 
 Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->as('dokter.')->group(function () {
-    Route::resource('periksa', DokterPeriksaController::class);
+    // Daftar periksa pasien
+    Route::get('/periksa', [DokterPeriksaController::class, 'index'])->name('periksa.index');
+    Route::get('/periksa/{id}/edit', [DokterPeriksaController::class, 'edit'])->name('periksa.edit');
+    Route::put('/periksa/{id}', [DokterPeriksaController::class, 'update'])->name('periksa.update');
+
+    // Jadwal
     Route::get('/jadwal', [JadwalPeriksaController::class, 'index'])->name('jadwal.index');
     Route::get('/jadwal/create', [JadwalPeriksaController::class, 'create'])->name('jadwal.create');
     Route::post('/jadwal', [JadwalPeriksaController::class, 'store'])->name('jadwal.store');

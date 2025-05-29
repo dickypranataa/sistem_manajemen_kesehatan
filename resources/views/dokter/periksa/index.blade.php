@@ -1,39 +1,38 @@
 @extends('layouts.app')
 
-{{-- Customize layout sections --}}
-@section('subtitle', 'Welcome')
-@section('content_header_title', 'Home')
-@section('content_header_subtitle', 'Welcome')
+@section('content')
+<div class="container">
+    <h3>Daftar Pasien yang Siap Diperiksa</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nama Pasien</th>
+                <th>Keluhan</th>
+                <th>Tanggal Daftar</th>
+                <th>Total Harga</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($periksaList as $periksa)
+            <tr>
+                <td>{{ $periksa->pasien->name }}</td>
+                <td>{{ $periksa->keluhan }}</td>
+                <td>{{ $periksa->created_at->format('d-m-Y') }}</td>
+                <td>{{ $periksa->total_harga }}</td>
+                <td>{{ $periksa->status }}</td>
+                <td>
+                    @if($periksa->status == 'Belum diperiksa')
+                    <a href="{{ route('dokter.periksa.edit', $periksa->id) }}" class="btn btn-success btn-sm">Periksa</a>
+                    @elseif($periksa->status == 'Selesai')
+                    <a href="{{ route('dokter.periksa.edit', $periksa->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    @endif
+                </td>
 
-@section('content_body')
-<div class="card">
-    <div class="card-header">Periksa</div>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">ID Pasien</th>
-                    <th scope="col">Nama Pasien</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{-- Data yang disimulasikan (static data) --}}
-                @foreach ($periksa as $p)
-                <tr>
-                    <td>{{ $p->id }}</td>
-                    <td>{{ $p->id_pasien }}</td>
-                    <td>{{ $p->pasien->name ?? '-' }}</td>
-                    <td>
-                        <a href="{{ route('dokter.periksa.edit', $p->id) }}" class="btn btn-warning">Pemeriksaan</a>
-                    </td>
-
-                </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-    </div>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection

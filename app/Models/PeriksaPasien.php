@@ -1,5 +1,5 @@
 <?php
-
+//pasien
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +11,8 @@ class PeriksaPasien extends Model
         'pasien_id',
         'daftar_poli_id',
         'keluhan',
+        'tanggal_periksa',
+        'total_harga',
         'status',
     ];
 
@@ -23,6 +25,9 @@ class PeriksaPasien extends Model
     {
         return $this->belongsTo(DaftarPoli::class, 'daftar_poli_id');
     }
-
-    
+    public function obat()
+    {
+        return $this->belongsToMany(Obat::class, 'periksa_obat', 'periksa_pasien_id', 'obat_id')
+            ->withPivot('jumlah', 'harga');
+    }
 }

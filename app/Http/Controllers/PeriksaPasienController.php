@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\PeriksaPasien;
 use App\Models\DaftarPoli;
-use App\Models\User;
 use App\Models\Poli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +16,9 @@ class PeriksaPasienController extends Controller
         $no_rm = $user->no_rm;
 
         $polis = Poli::all();
-        $poliTerpilih = $request->query('poli_id'); // Ambil poli yang dipilih (dari query param)
+        $poliTerpilih = $request->query('poli_id');
 
-        // Filter jadwal sesuai poli_id yang terpilih (kalau ada)
+        // Ambil jadwal aktif sesuai poli (jika poli_id dikirim)
         $jadwals = DaftarPoli::where('status', 'aktif')
             ->when($poliTerpilih, function ($query) use ($poliTerpilih) {
                 $query->where('poli_id', $poliTerpilih);
@@ -29,29 +28,26 @@ class PeriksaPasienController extends Controller
         return view('pasien.periksa.create', compact('polis', 'no_rm', 'jadwals', 'poliTerpilih'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
-            // 'poli_id' => 'required|exists:polis,id', // Tidak perlu validasi poli_id karena hanya daftar_poli_id yg digunakan
             'daftar_poli_id' => 'required|exists:daftar_poli,id',
-            'keluhan' => 'nullable|string'
+            'keluhan' => 'nullable|string',
         ]);
 
         $user = Auth::user();
 
-        // Cari no antrian terbaru untuk jadwal tersebut
-        $daftarPoli = DaftarPoli::findOrFail($request->daftar_poli_id);
+        // Hitung no antrian untuk poli yang dipilih
         $lastAntrian = PeriksaPasien::where('daftar_poli_id', $request->daftar_poli_id)->count();
-        $daftarPoli->no_antrian = $lastAntrian + 1;
-        $daftarPoli->save();
 
-        // Simpan data periksa pasien
+        // Tidak perlu update `no_antrian` di tabel DaftarPoli (biasanya disimpan di PeriksaPasien)
+        // Buat data periksa
         PeriksaPasien::create([
             'pasien_id' => $user->id,
             'daftar_poli_id' => $request->daftar_poli_id,
             'keluhan' => $request->keluhan,
             'status' => 'Belum diperiksa',
+            // Biasanya `no_antrian` kalau ada, disimpan di tabel ini, bukan di daftar_poli
         ]);
 
         return redirect()->route('pasien.periksa.index')->with('success', 'Pendaftaran periksa berhasil!');
@@ -59,7 +55,11 @@ class PeriksaPasienController extends Controller
 
     public function index()
     {
-        $periksas = PeriksaPasien::with(['pasien', 'daftarPoli'])->get();
+        $user = Auth::user();
+        $periksas = PeriksaPasien::with(['daftarPoli.poli', 'daftarPoli.dokter'])
+            ->where('pasien_id', $user->id) // hanya data pasien login
+            ->get();
+
         return view('pasien.periksa.index', compact('periksas'));
     }
 }

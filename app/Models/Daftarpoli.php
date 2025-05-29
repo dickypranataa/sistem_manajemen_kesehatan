@@ -19,4 +19,14 @@ class DaftarPoli extends Model
         'status',
         'no_antrian',
     ];
+
+    public function poli()
+    {
+        return $this->belongsTo(Poli::class, 'poli_id');
+    }
+
+    public function dokter()
+    {
+        return $this->belongsTo(User::class, 'dokter_id');
+    }
 }
