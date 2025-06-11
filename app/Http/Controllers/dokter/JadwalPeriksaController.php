@@ -46,26 +46,43 @@ class JadwalPeriksaController extends Controller
     public function edit($id)
     {
         $jadwal = DaftarPoli::findOrFail($id);
+
+        if ($jadwal->dokter_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit jadwal ini.');
+        }
+
         return view('dokter.jadwal.edit', compact('jadwal'));
     }
 
+
     public function update(Request $request, $id)
     {
+        // Validasi hanya kolom status
         $request->validate([
-            'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
             'status' => 'required|in:aktif,tutup',
         ]);
 
+        // Ambil data jadwal yang ingin diubah
         $jadwal = DaftarPoli::findOrFail($id);
+
+        // Cek apakah jadwal milik dokter yang sedang login
+        if ($jadwal->dokter_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki izin untuk mengubah jadwal ini.');
+        }
+
+        // Jika status yang dikirim adalah "aktif"
+        if ($request->status === 'aktif') {
+            // Tutup semua jadwal lain milik dokter yang sama
+            DaftarPoli::where('dokter_id', Auth::id())
+                ->where('id', '!=', $jadwal->id)
+                ->update(['status' => 'tutup']);
+        }
+
+        // Update status pada jadwal ini
         $jadwal->update([
-            'hari' => $request->hari,
-            'jam_mulai' => $request->jam_mulai,
-            'jam_selesai' => $request->jam_selesai,
             'status' => $request->status,
         ]);
 
-        return redirect()->route('dokter.jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
+        return redirect()->route('dokter.jadwal.index')->with('success', 'Status jadwal berhasil diperbarui.');
     }
 }

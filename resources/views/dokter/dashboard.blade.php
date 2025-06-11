@@ -1,40 +1,58 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Dashboard Dokter')
+
+@section('content_header')
+<h1>Dashboard Dokter</h1>
+
+@stop
 
 @section('content')
-<div class="container">
-    <h2 class="mb-4">Dashboard Dokter</h2>
+<div class="row">
 
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header">Jumlah Obat</div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ $jumlahObat }}</h5>
-                </div>
+    <!-- Kartu Pasien Diperiksa -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <p>Pasien yang Diperiksa</p>
             </div>
+            <div class="icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <a href="{{ route('dokter.periksa.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
     </div>
 
-    <h4>Data Pemeriksaan</h4>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Pasien</th>
-                <th>Tanggal Periksa</th>
-                <th>Catatan</th>
-                <th>Biaya</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($periksas as $periksa)
-            <tr>
-                <td>{{ $periksa->pasien->name ?? 'Tidak Diketahui' }}</td>
-                <td>{{ $periksa->tgl_periksa }}</td>
-                <td>{{ $periksa->catatan }}</td>
-                <td>Rp{{ number_format($periksa->biaya_periksa, 0, ',', '.') }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <!-- Kartu Jadwal Pemeriksaan -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <p>Jadwal Pemeriksaan</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <a href="{{ route('dokter.jadwal.index') }}" class="small-box-footer">
+                Lihat Jadwal <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Kartu Riwayat Pasien -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <p>Riwayat Pasien</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-history"></i>
+            </div>
+            <a href="{{ route('dokter.riwayat.index') }}" class="small-box-footer">
+                Lihat Riwayat <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
-@endsection
+@stop

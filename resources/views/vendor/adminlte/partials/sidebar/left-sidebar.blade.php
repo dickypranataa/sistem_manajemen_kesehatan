@@ -40,6 +40,13 @@
                         <p>Riwayat Periksa</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('dokter.profile.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Profil</p>
+                    </a>
+                </li>
+
 
                 @elseif(Auth::check() && Auth::user()->role === 'pasien')
                 {{-- Menu pasien --}}

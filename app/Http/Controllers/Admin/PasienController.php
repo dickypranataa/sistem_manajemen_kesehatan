@@ -49,7 +49,7 @@ class PasienController extends Controller
             'no_hp'   => $request->no_hp,
             'no_rm'   => $no_rm,
             'role'    => 'pasien',
-            'email'   => ($request->no_ktp ?: uniqid()) . '@mail.com', 
+            'email'   => ($request->name ?: uniqid()) . '@gmail.com',
             'password' => bcrypt('password'), // default password
         ]);
 

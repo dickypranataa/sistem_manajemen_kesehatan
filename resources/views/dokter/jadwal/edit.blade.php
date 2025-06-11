@@ -13,32 +13,25 @@
             @csrf
             @method('PUT')
 
+            {{-- Hari (Readonly) --}}
             <div class="form-group">
                 <label for="hari">Hari</label>
-                <select name="hari" id="hari" class="form-control @error('hari') is-invalid @enderror" required>
-                    <option value="" disabled>Pilih Hari</option>
-                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'] as $hari)
-                    <option value="{{ $hari }}" {{ old('hari', $jadwal->hari) == $hari ? 'selected' : '' }}>{{ $hari }}</option>
-                    @endforeach
-                </select>
-                @error('hari')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
+                <input type="text" class="form-control" value="{{ $jadwal->hari }}" readonly>
             </div>
+
+            {{-- Jam Mulai (Readonly) --}}
             <div class="form-group">
                 <label for="jam_mulai">Jam Mulai</label>
-                <input type="time" name="jam_mulai" id="jam_mulai" class="form-control @error('jam_mulai') is-invalid @enderror" value="{{ old('jam_mulai', $jadwal->jam_mulai) }}" required>
-                @error('jam_mulai')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
+                <input type="time" class="form-control" value="{{ $jadwal->jam_mulai }}" readonly>
             </div>
+
+            {{-- Jam Selesai (Readonly) --}}
             <div class="form-group">
                 <label for="jam_selesai">Jam Selesai</label>
-                <input type="time" name="jam_selesai" id="jam_selesai" class="form-control @error('jam_selesai') is-invalid @enderror" value="{{ old('jam_selesai', $jadwal->jam_selesai) }}" required>
-                @error('jam_selesai')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
+                <input type="time" class="form-control" value="{{ $jadwal->jam_selesai }}" readonly>
             </div>
+
+            {{-- Status (Editable) --}}
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
@@ -49,7 +42,8 @@
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Simpan Jadwal</button>
+
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             <a href="{{ route('dokter.jadwal.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>

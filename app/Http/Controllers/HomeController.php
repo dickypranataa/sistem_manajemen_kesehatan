@@ -34,7 +34,11 @@ class HomeController extends Controller
             return view('dokter.dashboard', compact('periksas', 'jumlahObat'));
         } elseif ($user->role === 'pasien') {
             return view('pasien.dashboard');
+        } elseif ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
         }
+        
+
 
         return view('home');
     }
