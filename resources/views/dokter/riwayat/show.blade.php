@@ -17,6 +17,7 @@
                 <th>No</th>
                 <th>Tanggal Periksa</th>
                 <th>Nama Dokter</th>
+                <th>Antrean</th>
                 <th>Keluhan</th>
                 <th>Catatan</th>
                 <th>Obat</th>
@@ -29,6 +30,7 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $riwayat->tanggal_periksa ?? '-' }}</td>
                 <td>{{ $riwayat->daftarPoli->dokter->name ?? '-' }}</td>
+                <td>{{ $riwayat->no_antrian ?? '-' }}</td>
                 <td>{{ $riwayat->keluhan ?? '-' }}</td>
                 <td>{{ $riwayat->catatan ?? '-' }}</td>
                 <td>

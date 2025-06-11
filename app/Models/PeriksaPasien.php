@@ -15,7 +15,9 @@ class PeriksaPasien extends Model
         'tanggal_periksa',
         'total_harga',
         'status',
+        'no_antrian',
     ];
+
 
     public function pasien()
     {

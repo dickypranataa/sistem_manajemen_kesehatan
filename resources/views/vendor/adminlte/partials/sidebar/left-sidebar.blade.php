@@ -35,12 +35,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/dokter/obat') }}" class="nav-link">
-                        <i class="fas fa-pills nav-icon"></i>
-                        <p>Obat</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ url('/dokter/riwayat') }}" class="nav-link">
                         <i class="fas fa-history nav-icon"></i>
                         <p>Riwayat Periksa</p>

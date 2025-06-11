@@ -32,7 +32,7 @@
             <td>{{ $periksa->daftarPoli->hari }}</td>
             <td>{{ $periksa->daftarPoli->jam_mulai }}</td>
             <td>{{ $periksa->daftarPoli->jam_selesai }}</td>
-            <td>{{ $periksa->daftarPoli->no_antrian }}</td>
+            <td>{{ $periksa->no_antrian ?? '-' }}</td>
             <td>{{ $periksa->status }}</td>
         </tr>
         @endforeach

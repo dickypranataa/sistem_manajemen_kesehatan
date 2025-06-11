@@ -8,6 +8,7 @@
             <tr>
                 <th>Nama Pasien</th>
                 <th>Tanggal Daftar</th>
+                <th>Antrean</th>
                 <th>Keluhan</th>
                 <th>Catatan</th>
                 <th>Total Harga</th>
@@ -20,6 +21,7 @@
             <tr>
                 <td>{{ $periksa->pasien->name }}</td>
                 <td>{{ $periksa->created_at->format('d-m-Y') }}</td>
+                <td>{{ $periksa->no_antrian }}</td>
                 <td>{{ $periksa->keluhan }}</td>
                 <td>{{ $periksa->catatan }}</td>
                 <td>{{ $periksa->total_harga }}</td>

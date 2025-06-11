@@ -37,21 +37,21 @@ class PeriksaPasienController extends Controller
 
         $user = Auth::user();
 
-        // Hitung no antrian untuk poli yang dipilih
+        // Hitung no antrian berdasarkan jumlah periksa pada jadwal tersebut
         $lastAntrian = PeriksaPasien::where('daftar_poli_id', $request->daftar_poli_id)->count();
+        $noAntrian = $lastAntrian + 1;
 
-        // Tidak perlu update `no_antrian` di tabel DaftarPoli (biasanya disimpan di PeriksaPasien)
-        // Buat data periksa
         PeriksaPasien::create([
             'pasien_id' => $user->id,
             'daftar_poli_id' => $request->daftar_poli_id,
             'keluhan' => $request->keluhan,
             'status' => 'Belum diperiksa',
-            // Biasanya `no_antrian` kalau ada, disimpan di tabel ini, bukan di daftar_poli
+            'no_antrian' => $noAntrian,
         ]);
 
         return redirect()->route('pasien.periksa.index')->with('success', 'Pendaftaran periksa berhasil!');
     }
+
 
     public function index()
     {
